@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -30,5 +31,11 @@ class OrderController extends Controller
         $test=Order::with('user','product')->find($id);
         $pdf = PDF::loadView('admin.pdf',['order'=>$order]);
         return $pdf->download('order_details.pdf');
+    }
+    public function sendEmail($id)
+    {
+        $user=User::find($id);
+       
+        return view('admin.email_info',['user'=>$user]);
     }
 }

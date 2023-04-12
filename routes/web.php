@@ -49,4 +49,5 @@ Route::get('delivered/{id}',[OrderController::class,'delivered']);
 
 
 Route::get('print/{id}',[OrderController::class,'print']);
+Route::get('send_email/{id}',[OrderController::class,'sendEmail']);
 
