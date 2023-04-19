@@ -2,24 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-
-
-
-class Order extends Model
+class Reply extends Model
 {
     use HasFactory;
-    use Notifiable;
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function product()
+    public function comment()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Comment::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
+use App\Models\Reply;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,6 +70,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function products()
     {
         return $this->belongsToMany(Product::class, 'carts')->withPivot(['id','quantite']);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
    
 }

@@ -37,6 +37,9 @@
                             <li>
                                 <a href="help.html">Help</a>
                             </li>
+                            <li>
+                                <a href="{{url('order_user')}}">Order</a>
+                            </li>
                             @if (Route::has('login'))
                             @auth
                             <li>

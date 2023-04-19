@@ -21,6 +21,11 @@
             width: 200px;
             height: 200px;
         }
+        table {
+            width: 100% !important;
+            overflow-x: auto !important;
+            display: inline-block !important;
+        }
     </style>
 </head>
 
