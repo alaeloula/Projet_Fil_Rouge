@@ -14,7 +14,6 @@
                     </figure>
                 </div>
                 <div class="col-sm-8">
-                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
                     <a href="{{route('product.show',[$product->id])}}">
                         <h3>{{$product->title}}</h3>
                     </a>
@@ -29,8 +28,8 @@
                             <li><input type="number" name="quantite" value="1" min="1" id=""></li>
                             <li><input type="submit" class="btn_1" value="Add to cart"></li>
                         </form>
-                        <li><a href="#0" class="btn_1 gray tooltip-1" data-toggle="tooltip" data-placement="top" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="btn_1 gray tooltip-1" data-toggle="tooltip" data-placement="top" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+
+                      
                     </ul>
                 </div>
             </div>

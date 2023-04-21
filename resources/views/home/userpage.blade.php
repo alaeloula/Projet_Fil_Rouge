@@ -42,7 +42,7 @@
 </head>
 
 <body>
-
+    @include('sweetalert::alert')
     <div id="page" class="theia-exception">
 
         @include('home.header')
@@ -90,9 +90,7 @@
                     <a href="javascript:void(0);" onclick="reply(this)" data-Commentid="{{$comment->id}}" class="btn_1 gray tooltip-1">Reply</a>
                     @foreach($replies as $reply)
                     @if($reply->comment->id == $comment->id)
-                    <div
-                    style="padding-left: 3%;padding-top: 10px;padding-bottom: 10px;"
-                    >
+                    <div style="padding-left: 3%;padding-top: 10px;padding-bottom: 10px;">
                         <b>reply by : {{$reply->user->name}}</b>
                         <p>{{$reply->reply}}</p>
                     </div>
@@ -147,8 +145,8 @@
             $('.replyDiv').hide()
         }
     </script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function(event) { 
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
             var scrollpos = localStorage.getItem('scrollpos');
             if (scrollpos) window.scrollTo(0, scrollpos);
         });

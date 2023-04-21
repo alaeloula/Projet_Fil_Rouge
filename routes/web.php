@@ -24,6 +24,15 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/',[HomeController::class,'index']);
 
+
+
+Route::get('about', function () {
+    return view('home.about');
+})->name('about');
+Route::get('contact', function () {
+    return view('home.contact');
+})->name('contact');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -35,7 +44,7 @@ Route::middleware([
 });
 
 Route::get('/redirect',[HomeController::class,'redirect'])->middleware('auth','verified');
-Route::resource('Category', CategoryController::class);
+Route::resource('Category', CategoryController::class)->middleware(['auth','userType:1']);;
 Route::resource('product', ProductController::class);
 Route::post('add_cart/{id}',[HomeController::class,'add_cart']);
 Route::get('show_cart',[HomeController::class,'show_cart']);

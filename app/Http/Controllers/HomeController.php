@@ -12,19 +12,38 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Session;
 use Stripe;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
     public function index()
     {
         if (Auth::id()) {
-            $user = Auth::User();
-            $products_cart = $user->products;
+           if (Auth::user()->usertype == 1) {
+            $orders = Order::with('user', 'product')->get();
+            $totalerevenu = 0;
+            foreach ($orders as $order) {
+                $totalerevenu += $order->quantite * $order->product->price;
+            }
 
-            $products = Product::with('category')->paginate(2);
-            return view('home.userpage', ['products' => $products, 'products_cart' => $products_cart]);
+            $data = [
+                'totalproduct' => Product::all()->count(),
+                'totalorder' => Order::all()->count(),
+                'totaluser' => User::where('usertype', '=', 0)->count(),
+                'totalerevenu' => $totalerevenu,
+                'OrderDelivred' => Order::where('delivery_status', '=', 'delivred')->count(),
+                'OrderProcessing' => Order::where('delivery_status', '=', 'processing')->count(),
+
+            ];
+            return view('admin.home', ['data' => $data]);
+           }
+            $user = Auth::User();
+            $comments = Comment::with('user')->get();
+            $products = Product::with('category')->paginate(10);
+            $replies = Reply::with('user', 'comment')->get();
+            return view('home.userpage', ['products' => $products, 'comments' => $comments,'replies'=>$replies]);
         } else {
-            $products = Product::with('category')->paginate(2);
+            $products = Product::with('category')->paginate(10);
             return view('home.userpage', ['products' => $products]);
         }
     }
@@ -50,7 +69,7 @@ class HomeController extends Controller
             return view('admin.home', ['data' => $data]);
         } else {
             $comments = Comment::with('user')->get();
-            $products = Product::with('category')->paginate(2);
+            $products = Product::with('category')->paginate(10);
             $replies = Reply::with('user', 'comment')->get();
             return view('home.userpage', ['products' => $products, 'comments' => $comments,'replies'=>$replies]);
         }
@@ -65,6 +84,7 @@ class HomeController extends Controller
             $cartModel->quantite = $request->quantite;
             $cartModel->user_id = auth::user()->id;
             $cartModel->save();
+            Alert::success('Product Added <successFully','We have added product to the cart');
             return redirect()->back();
         } else {
             return redirect('login');

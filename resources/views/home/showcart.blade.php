@@ -31,7 +31,7 @@
     <link href="{{asset('home/css/custom.css')}}" rel="stylesheet">
 
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         .img_size {
@@ -46,7 +46,7 @@
 </head>
 
 <body>
-
+    @include('sweetalert::alert')
     <div id="page" class="theia-exception">
 
         @include('home.header')
@@ -78,26 +78,29 @@
                         <td><img src="/pd/{{$pd->image}}" alt="" srcset="" class="img_size"></td>
 
 
-                       
+
                         <td>
-                            <a href="{{url('remove_cart',$pd->pivot->id)}}" class="btn btn-primary">supp</a>
+                            <a href="{{url('remove_cart',$pd->pivot->id)}}" class="" onclick="">supp</a>
                         </td>
-                       
+
                     </tr>
-                    <?php $totalePrice += $pd->price*$pd->pivot->quantite ?>
+                    <?php $totalePrice += $pd->price * $pd->pivot->quantite ?>
                     @endforeach
                 </tbody>
             </table>
             <center>
                 <h1 class="total">Total Price : {{$totalePrice}}</h1>
             </center>
-            <div>
+            <center>
+                  <div>
                 <h1 style="font-size: 25px; padding-bottom: 15 px;">
                     Proceed To Order
                 </h1>
-                <a href="{{url('cash_order')}}" class="btn btn-danger">Cash On Delivery</a>
-                <a href="{{url('stripe',$totalePrice)}}" class="btn btn-danger">Pay Using Card</a>
+                <a href="{{url('cash_order')}}" class="btn_1">Cash On Delivery</a>
+                <a href="{{url('stripe',$totalePrice)}}" class="btn_1 gray">Pay Using Card</a>
             </div>
+            </center>
+          
 
         </div>
 
@@ -108,6 +111,25 @@
     <!-- page -->
 
     <div id="toTop"></div><!-- Back to top button -->
+
+    <script>
+        function confirmation(ev) {
+            ev.preventDefault();
+            var urlToRedirect = ev.currentTarget.getATTribute('href');
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'are u sure to cancel product',
+                text: 'you will not be able to revert this',
+               buttons:true,
+                dangerMode:true
+            }).then((willCancel)=>{
+                if(willCancel){
+                    window.location.href = urlToRedirect;
+                }
+            });
+        }
+    </script>
 
     <!-- COMMON SCRIPTS -->
     <script src="home/js/common_scripts.min.js"></script>
