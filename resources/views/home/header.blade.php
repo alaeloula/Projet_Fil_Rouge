@@ -29,10 +29,10 @@
 
 
                             <li>
-                                <a href="contacts.html">contacts</a>
+                                <a href="{{url('contact')}}">contacts</a>
                             </li>
                             <li>
-                                <a href="about.html">about</a>
+                                <a href="{{url('about')}}">about</a>
                             </li>
                             @if (Route::has('login'))
                             @auth
